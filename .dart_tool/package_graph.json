@@ -7,6 +7,7 @@
       "name": "poster",
       "version": "0.1.0",
       "dependencies": [
+        "flame",
         "flutter"
       ],
       "devDependencies": [
@@ -36,6 +37,17 @@
         "stack_trace",
         "stream_channel",
         "test_api",
+        "vector_math"
+      ]
+    },
+    {
+      "name": "flame",
+      "version": "1.35.1",
+      "dependencies": [
+        "collection",
+        "flutter",
+        "meta",
+        "ordered_set",
         "vector_math"
       ]
     },
@@ -139,6 +151,11 @@
         "string_scanner",
         "term_glyph"
       ]
+    },
+    {
+      "name": "ordered_set",
+      "version": "8.0.0",
+      "dependencies": []
     },
     {
       "name": "sky_engine",

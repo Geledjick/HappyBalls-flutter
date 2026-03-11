@@ -1,48 +1,50 @@
 import 'package:flutter/material.dart';
-import 'game_screen.dart';
+import 'package:flame/game.dart';
+
+import 'Scene.dart';
+import 'GameScene.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
-var buttonStyle = ButtonStyle(
+class SceneManager extends FlameGame {
+  void changeScene(Scene newScene) {
+    _currentScene?.onExit();
 
-);
+    _currentScene = newScene;
+
+    _currentScene!.onLoad();
+    _currentScene!.onEnter();
+  }
+
+  @override
+  Future<void> onLoad() async {
+    changeScene(GameScene(this, 14, 14));
+  }
+
+  @override
+  void update(double dt) {
+    _currentScene?.update(dt);
+  }
+
+  @override
+  void render(Canvas canvas) {
+    _currentScene?.render(canvas);
+  }
+
+  // ---
+
+  Scene? _currentScene;
+}
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Game with Menu",
-      initialRoute: "/",
-      routes: {
-        "/": (context) => MenuScreen(),
-        "/game": (context) => GameScreen(),
-      },
-    );
-  }
-}
-
-class MenuScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blueGrey,
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ElevatedButton(
-              child: Text("Start Game"),
-              onPressed: () {
-                Navigator.pushNamed(context, "/game");
-              },
-            ),
-            SizedBox(height: 12),
-            ElevatedButton(child: Text("Exit"), onPressed: () {}),
-          ],
-        ),
-      ),
+      home: Scaffold(body: GameWidget(game: SceneManager())),
     );
   }
 }
