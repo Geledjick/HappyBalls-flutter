@@ -29,6 +29,12 @@ class SceneManager extends FlameGame {
   }
 
   @override
+  void onGameResize(Vector2 size) {
+    super.onGameResize(size);
+    _currentScene?.resize(size);
+  }
+
+  @override
   void render(Canvas canvas) {
     _currentScene?.render(canvas);
   }
@@ -44,7 +50,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(body: GameWidget(game: SceneManager())),
+      home: Scaffold(
+        body: Center(
+          child: GameWidget(
+            game: SceneManager()
+          ),
+        ),
+        bottomNavigationBar: Container(
+          child: Text(
+            "42",
+            style: TextStyle(fontSize: 42),
+          ),
+        ),
+      ),
     );
   }
 }

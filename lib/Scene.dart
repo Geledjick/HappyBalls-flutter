@@ -7,7 +7,7 @@ abstract class Scene {
   void onLoad() {}
   void update(double dt) {}
   void render(Canvas canvas) {}
-  void resize() {}
+  void resize(Vector2 size) {}
   void onEnter() {}
   void onExit() {}
 
