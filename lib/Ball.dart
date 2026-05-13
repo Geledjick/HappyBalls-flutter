@@ -1,40 +1,26 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
-import 'package:flame/components.dart';
-import 'package:flame/events.dart';
+class Ball {
+  Color color = Colors.transparent;
+}
 
-class Ball extends PositionComponent with TapCallbacks {
-  Ball(double radius, Color color, Vector2 position)
-    : _radius = radius,
-      _color = color,
-      super(
-        position: position,
-        size: Vector2.all(radius * 2),
-        anchor: Anchor.center,
-      );
+class BallWidget extends StatelessWidget {
+  const BallWidget({super.key, required this.ball});
+
+  final Ball ball;
 
   @override
-  void onTapUp(TapUpEvent event) {
-    super.onTapUp(event);
-
-    print("Ale");
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: AnimatedContainer(
+        decoration: BoxDecoration(
+          color: ball.color,
+          shape: BoxShape.circle,
+        ),
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.linear,
+      ),
+    );
   }
-
-  void setPaint(Paint paint) {
-    _paint = paint;
-    paint.color = _color;
-  }
-
-  @override
-  void render(Canvas canvas) {
-    super.render(canvas);
-    if (_paint != null) {
-      canvas.drawCircle(Offset(_radius, _radius), _radius, _paint!);
-    }
-  }
-
-  Paint? _paint;
-
-  double _radius;
-  Color _color;
 }
